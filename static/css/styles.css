@@ -1,0 +1,1180 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Предотвращаем появление полос прокрутки */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.admin-button{
+    top:40px;
+}
+
+.timer {
+    position: absolute;
+    top: 20px;
+    left: 50%; /* Выберите подходящее местоположение */
+    background-color: white; /* Белый фон */
+    border: 1px solid black; /* Черная обводка */
+    padding: 10px; /* Отступ внутри квадратика */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Небольшая тень для эффекта "выпуклости" */
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 16px; /* Размер шрифта для времени */
+    display: flex; /* Использование flexbox для центрирования содержимого */
+    justify-content: center; /* Горизонтальное центрирование */
+    align-items: center; /* Вертикальное центрирование */
+    width: 50px; /* Ширина квадратика */
+    height: 50px; /* Высота квадратика */
+}
+
+.chat-button {
+    position: absolute;
+    left: 20px;
+    top: 50px; /* Adjust as needed */
+}
+
+#toggleChatButton {
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+    /* Стили кнопки: padding, background, border и т.д. */
+}
+
+/* 2 part styles.css */
+
+.color {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.chat {
+    position: absolute;
+    width: 350px; /* Adjust as needed */
+    height: 350px; /* Adjust as needed */
+    background-color: lightgray;
+    border: 1px solid black;
+    overflow-y: auto; /* Добавляем прокрутку при необходимости */
+}
+
+.message {
+    font-size: 10px;
+    padding: 5px;
+    border-bottom: 1px solid black;
+    word-wrap: break-word;
+    white-space: normal;
+
+}
+
+.admin-panel {
+            position: fixed;
+            top: 15px;
+            right: 45px;
+        }
+
+        .admin-subpanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none;
+}
+.visible {
+    display: block; /* делает элемент видимым */
+}
+
+.admin-subpanel {
+
+    top: 100%; /* Расположение под кнопкой "Панель администратора" */
+    right: 0;
+    background-color: lightgray;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.admin-subpanel button {
+    margin-bottom: 5px;
+}
+
+.message-input-container {
+    position: absolute; /* Фиксируем позицию относительно родителя */
+    bottom: 0; /* Прижимаем к нижней части родителя */
+    left: 0; /* Располагаем слева от родителя */
+    right: 0; /* Располагаем справа от родителя для полной ширины */
+    background: #fff; /* Фон, если требуется */}
+
+.message-input {
+    flex: 1;
+}
+
+.send-message-button {
+    width: 100px; /* Вы можете настроить ширину кнопки по вашему усмотрению */
+}
+
+.chat {
+    overflow-x: hidden; /* Запрещаем горизонтальную прокрутку */
+    overflow-y: auto; /* Разрешаем вертикальную прокрутку, если контент выходит за пределы */
+    position: fixed;
+}
+.message-input-container {
+    position: absolute; /* Устанавливаем абсолютное позиционирование для контейнера */
+    bottom: 0; /* Располагаем контейнер внизу чата */
+    width: 100%; /* Занимаем всю доступную ширину */
+    box-sizing: border-box; /* Учитываем границы и отступы в общей ширине */
+    padding: 10px; /* Добавляем отступы, если нужно */
+    background-color: #fff; /* Цвет фона для контейнера (если нужно) */
+}
+
+#palette {
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение элементов */
+    align-items: center; /* Центрирование элементов внутри палитры */
+}
+
+
+.color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid black;
+    transition: width 0.3s ease; /* Плавное изменение ширины */
+}
+
+.color.active {
+    width: 25px; /* Увеличение ширины для активного элемента */
+    height: 25px;
+}
+
+#drawing-canvas {
+         border: 1px solid black;
+}
+#color-palette {
+    position: fixed;
+    right: 10px; /* Прижимаем к правому краю экрана */
+    top: 10px; /* Положение от верхнего края экрана */
+    z-index: 2; /* Убедитесь, что палитра находится поверх других элементов */
+    display: flex;
+    flex-direction: column; /* Устанавливаем вертикальное направление элементов */
+    align-items: center; /* Центрируем элементы */
+}
+
+#auth-container {
+    position: fixed; /* Фиксированное позиционирование относительно окна браузера */
+    left: 10px; /* Отступ слева */
+    bottom: 10px; /* Отступ снизу */
+    z-index: 10; /* Убедитесь, что контейнер выше канваса */
+}
+
+.auth-button {
+    padding: 5px 10px; /* Подушка для лучшего вида */
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание текста */
+    border-radius: 5px; /* Скругление углов кнопки */
+    margin: 0; /* Сброс дополнительных отступов */
+}
+
+#messagesContainer {
+    overflow-y: auto; /* Прокрутка для просмотра сообщений */
+    /* ... другие стили ... */
+}
+
+.alert-box {
+    position: fixed;
+    bottom: 10px;
+    left: 50%; /* Центрируем относительно левого края */
+    transform: translateX(-50%); /* Смещаем назад на половину своей ширины */
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-box.hidden {
+    display: none;
+}
+
+.alert-box button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 60px;
+
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/**/
+/**/
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 30%; /* Высота контейнера чата */
+}
+
+.messages-container {
+    overflow-y: auto;
+    flex-grow: 1; /* Сообщения занимают всё доступное пространство */
+}
+
+.message-input-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0); /* черный с 50% прозрачности */
+    /* другие стили */
+    display: flex;
+    gap: 100px; /* Увеличьте расстояние между элементами */
+    padding: 10px;
+    align-items: center; /* Выравнивание элементов по центру */
+
+    flex-direction: column;
+}
+
+.chat {
+    background: rgba(0, 0, 0, 0.85); /* черный с 50% прозрачности */
+    color: #fff; /* белый текст */
+    font-family: 'Press Start 2P', cursive; /* пиксельный шрифт */
+    font-size:14px;
+    right:50px;
+    overflow-y: auto; /* Добавить скролл, если содержимое выходит за пределы */
+
+}
+.send-message-button {
+    background-color: transparent; /* Прозрачный фон */
+    color: white;
+    padding: 5px 5px;
+    border: 2px solid white; /* Белая обводка */
+    border-radius: 20px; /* Скругленные углы */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Плавный переход для фона */
+    display: inline-block; /* или 'block', если кнопка должна быть на отдельной строке */
+    text-align: center;
+    margin-top: 10px; /* Вертикальный отступ сверху кнопки */
+
+}
+
+.send-message-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Слегка белесый фон при наведении */
+}
+
+.message-input {
+    padding: 10px 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    width: calc(100% - 30px); /* Учитывая padding */
+}
+
+.message-input {
+    background-color: rgba(255, 255, 255, 0.3); /* Прозрачный белый фон */
+    color: white; /* Белый цвет текста */
+    border: 2px solid white; /* Белая обводка */
+    font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт, если он подключен */
+    padding: 5px 10px; /* Отступы внутри поля */
+
+}
+.chat {
+    margin-top: 25px; /* Отступ сверху, достаточный для отображения координат */
+    /* Остальные стили для чата */
+}
+
+/* Фон трека скроллбара (части, по которой движется ползунок) */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2); /* Прозрачный фон */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+
+/* Стилизация скроллбара для Webkit и Blink браузеров (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 12px; /* ширина скроллбара */
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0); /* прозрачный фон трека */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5); /* полупрозрачный белый ползунок */
+    border-radius: 6px; /* скругление углов */
+}
+
+/* Стилизация скроллбара для Firefox */
+* {
+    scrollbar-width: thin; /* 'auto' или 'thin' */
+    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0); /* цвет ползунка и трека */
+}
+
+.coords{
+    font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт, если он подключен */
+    font-size: 12px;
+}
+.timer{
+font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт, если он подключен */
+}
+
+.auth-button{
+font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт, если он подключен */
+}
+
+.close-button{
+
+}
+
+.pixelText{
+font-family: 'Press Start 2P', cursive;
+}
+.boldNicksInChat{
+font-weight: bold;
+text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000; /* Черная обводка вокруг текста */
+}
+
+.owner{
+    font-weight: bold;        /* Жирное начертание текста */
+    color: gold;              /* Золотой цвет текста для выделения */
+    text-shadow: 0 0 5px red; /* Красная тень для текста, делает имя более заметным */
+    background-color: black;  /* Черный фон за текстом, улучшает контраст */
+    padding: 2px 5px;         /* Паддинг вокруг текста для лучшего выделения */
+    border-radius: 4px;       /* Скругленные углы для фонового блока */
+    border: 1px solid gold;   /* Золотая рамка вокруг имени */
+    font-size: 1.1em;         /* Увеличенный размер шрифта */
+    margin: 0 5px;            /* Отступы вокруг элемента для отделения от другого текста */
+    cursor: pointer;
+}
+
+.language-box {
+    position: fixed;
+    bottom: 10px;
+    left: 50%; /* Центрируем относительно левого края */
+    transform: translateX(-50%); /* Смещаем назад на половину своей ширины */
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-yeban {
+    position: relative;
+}
+
+.chat {
+    /* Другие стили для .chat */
+}
+
+.message-input-container {
+    position: relative;
+
+    /* Другие стили для .message-input-container */
+}
+
+
+
+.chat.visible {
+    display: block; /* или flex, в зависимости от вашей структуры */
+}
+
+.chat-yeban {
+    /* Если нужно, добавьте стили для внешнего контейнера */
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Выравнивание кнопки внизу и справа */
+}
+
+.chat {
+    /* Стили для вашего чата */
+    bottom: 40px;
+    margin-bottom: 10px; /* Отступ от кнопки */
+
+}
+
+
+
+#auth-container{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: auto;
+}
+
+#auth-container {
+    display: absolute;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.toggle-chat-button {
+    bottom: 40px; /* Отступ снизу */
+    height:25px;
+    margin-left: 10px; /* Отступ слева */
+}
+
+.toggle-chat-button {
+    border-radius: 5px; /* Легкое скругление */
+    font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт */
+    font-size: 14px; /* Размер шрифта */
+    padding: 10px 20px; /* Внутренние отступы */
+    background-color: #007bff; /* Цвет фона */
+    color: white; /* Цвет текста */
+    border: none; /* Убираем обводку */
+    cursor: pointer; /* Стиль курсора при наведении */
+    display: flex; /* Используем flexbox для выравнивания содержимого */
+    align-items: center; /* Выравниваем текст по центру по вертикали */
+    justify-content: center; /* Выравниваем текст по центру по горизонтали */
+    text-align: center; /* Центрируем текст */
+}
+
+.crossed-text {
+    text-decoration: line-through;
+    text-decoration-style: solid; /* Опционально, задает стиль линии */
+    text-decoration-thickness: 2px; /* Увеличивает толщину линии */
+}
+
+.language-chooser{
+Font-size: 12px;
+height: 35px;
+left: 78px;
+bottom: 70px;
+}
+
+.instruct{
+bottom: 110px;
+position: absolute;
+left: 0px;
+z-index: 1;
+}
+
+.instruct-box{
+    width:80%;
+    z-index:10;
+}
+
+.instruction-content {
+    width:80%;
+    overflow-y: auto;  /* Включаем вертикальный скролл */
+    margin-bottom: 10px;  /* Отступ от кнопки */
+    flex-grow: 1;  /* Занимает все доступное пространство */
+    overflow-x: hidden; /* Убираем горизонтальный скролл */
+    word-wrap: break-word; /* Перенос слов, если они не помещаются в одну строку */
+}
+
+.modal {
+    position: fixed;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.0);
+    z-index: 1050;
+    display: none; /* Скрыто по умолчанию */
+}
+
+.modal.show {
+    display: block; /* Показать, когда активно */
+}
+
+.modal .modal-header,
+.modal .modal-footer {
+    padding: 10px;
+}
+
+.modal .modal-body {
+    padding: 20px;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: black;
+    text-shadow: none;
+    opacity: 0.5;
+}
+
+.close:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.micro-text{
+    Font-size:13px;
+    text-align:center;
+}
+
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+
+
+@media (max-width: 600px) {
+    /* Уменьшение размеров элементов палитры */
+    .color {
+        width: 13px;
+        height: 13px;
+        margin: 2px;
+    }
+
+    canvas {
+        image-rendering: pixelated;
+    }
+
+    .color.active {
+        width: 15px;
+        height: 15px;
+    }
+
+    .send-message-button {
+    font-size:10px;
+    }
+
+    .coords{
+        font-size: 14px;
+    }
+    /* Оптимизация расположения палитры цветов */
+    #color-palette {
+        position: fixed;
+        top: 10px; /* Располагаем палитру вверху */
+        right: 10px; /* Прижимаем к правому краю */
+        display: flex;
+        flex-wrap: wrap; /* Элементы переносятся на следующую строку */
+        width: auto; /* Ширина по содержимому */
+        padding: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 5px;
+        align-items: flex-start; /* Элементы выравниваются по верхнему краю */
+    }
+    .timer {
+        width: 30px; /* Уменьшаем ширину */
+        height: 30px; /* Уменьшаем высоту */
+        top: 45px; /* Располагаем ближе к верху */
+        left: calc(50% - 15px); /* Центрирование относительно ширины экрана */
+        font-size: 14px; /* Уменьшаем размер шрифта */
+    }
+
+    .admin-subpanel {
+        font-size: 12px; /* Уменьшаем размер шрифта для текста внутри панели */
+    }
+
+    .pixelText{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    }
+    .helpix{
+    font-size: 14px;
+    }
+    .admin-subpanel button,
+    .admin-subpanel input[type='text'],
+    .admin-subpanel input[type='number'],
+    .admin-subpanel label {
+        font-size: 12px; /* Уменьшаем размер шрифта */
+    }
+
+    .chat{
+        width:70%;
+    }
+
+    message-input{
+    font-size:10px;
+    }
+
+    .micro-text{
+    Font-size:10px;
+    }
+
+    .admin-subpanel input[type='text'],
+    .admin-subpanel input[type='number'] {
+        width: calc(100% - 10px); /* Расширяем поля ввода, учитывая отступы */
+    }
+    .admin-button{
+        word-wrap: break-word;
+        white-space: normal;
+        height:10px;
+    }
+    .admin-panel{
+        top:20px;
+    }
+    #privat_cords,
+    #owner_id {
+        margin-bottom: 5px; /* Добавляем небольшой отступ снизу для каждого поля ввода */
+    }
+    .messages-container{
+    height = 60%;
+    }
+
+    .message {
+    font-size: 10px;
+    }
+
+    .chat{
+    right:40px;
+    bottom:2px;
+    height: 190px; /* Adjust as needed */
+    }
+    .language-chooser{
+    left: 60px;
+    }
+    .modal {
+        width: 80%;
+        top: 10%;
+        transform: translate(-50%, 0);
+        max-height: 80%;
+        overflow: auto;
+    }
+    /*//////////////*/
+    .icon-button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 5px; /* Небольшой padding для лучшего клика по кнопке */
+    }
+
+    .alert-box.alert-boxs {
+    bottom:210px; !important;
+    }
+    #alertBox, #alertPrivateBox{
+    bottom:210px;
+
+    }
+    .ico-cross {
+        transform: rotate(135deg);
+    }
+
+    .buttonico {
+        width: 30px; /* Размеры картинки */
+        height: 30px;
+    }
+
+    .dropdown-menu {
+        display: none; /* Скрыть выпадающее меню */
+    }
+
+    .language-chooser:hover .dropdown-menu {
+        display: block; /* Показать меню при наведении */
+    }
+
+
+}
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+/*для мобилок*/
+
+
+.dropdown-content {
+    max-height: 50%; /* Ограничиваем высоту, адаптируйте под свои нужды */
+    overflow-y: auto;  /* Добавляем вертикальный скроллинг при необходимости */
+    border: 1px solid #ccc; /* Необязательно: добавляем границу для наглядности */
+    background: white; /* Фон, чтобы содержимое было легче читать */
+    position: absolute; /* Абсолютное позиционирование относительно родительского блока */
+    width: 100%; /* Ширина по ширине элемента input */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Необязательно: добавляем тень для визуального эффекта */
+    z-index: 1000; /* Убедитесь, что dropdown будет над другими элементами */
+}
+.overlay {
+    position: fixed;
+    display: none; /* Сначала скрыто */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    z-index: 1000; /* Поверх других элементов */
+    cursor: pointer;
+}
+
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Добавьте это в ваш CSS файл или в стиле <style> в HTML */
+#image-preview {
+    max-width: 100%;
+    max-height: 300px; /* Ограничиваем высоту, регулируйте по мере необходимости */
+    object-fit: contain; /* Сохраняем пропорции изображения, вписывая его в рамки */
+    display: block;
+    margin: 0 auto; /* Центрируем изображение */
+}
+/* Общие стили для оверлея */
+/* Общие стили для оверлея */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
+    display: none; /* Скрыт по умолчанию, отображается при необходимости */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    position: relative;
+}
+
+.overlay-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.overlay-card input[type="file"] {
+    display: none;
+}
+
+.overlay-card label[for="upload-image"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+}
+
+.overlay-card label[for="upload-image"]:hover {
+    background-color: #0056b3;
+}
+
+.overlay-card input[type="number"],
+.overlay-card button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.overlay-card button {
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #fff;
+}
+
+.overlay-card button[onclick="pixelateImage()"] {
+    background-color: #2196F3;
+}
+
+.overlay-card button[onclick="pixelateImage()"]:hover {
+    background-color: #1976D2;
+}
+
+.overlay-card button[onclick="window.fillOverlayPixels()"] {
+    background-color: #4CAF50;
+}
+
+.overlay-card button[onclick="window.fillOverlayPixels()"]:hover {
+    background-color: #388E3C;
+}
+
+.overlay-card button[onclick="window.clearSelectedImage()"] {
+    background-color: #f44336;
+}
+
+.overlay-card button[onclick="window.clearSelectedImage()"]:hover {
+    background-color: #d32f2f;
+}
+
+.overlay-card button[onclick="window.closeOverlay()"] {
+    background-color: #9e9e9e;
+}
+
+.overlay-card button[onclick="window.closeOverlay()"]:hover {
+    background-color: #757575;
+}
+
+.overlay-card img#image-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.overlay-card canvas#pixelated-canvas {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.overlay-card label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.overlay-card {
+    display: flex;
+    flex-direction: column;
+    max-height: 80%; /* Максимальная высота 80% от высоты экрана */
+    overflow-y: auto; /* Включаем прокрутку по вертикали, если содержимое больше высоты */
+}
+
+/* Дополнительные стили для улучшения внешнего вида скроллбара */
+.overlay-card::-webkit-scrollbar {
+    width: 10px; /* Ширина скроллбара */
+}
+
+.overlay-card::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Фон трека скроллбара */
+}
+
+.overlay-card::-webkit-scrollbar-thumb {
+    background: #888; /* Цвет самого скроллбара */
+}
+
+.overlay-card::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Цвет скроллбара при наведении */
+}
+.overlay-content{
+    max-height: 80%; /* Максимальная высота 80% от высоты экрана */
+    }
+
+    #privateAreasList {
+    max-height: 400px; /* Установите фиксированную высоту по своему усмотрению */
+    overflow-y: auto;  /* Добавляет вертикальную прокрутку, если содержимое превышает высоту */
+    border: 1px solid #ddd; /* Для четкости добавим рамку */
+    padding: 10px; /* Пространство между контентом и границей */
+    background-color: #f9f9f9; /* Светлый фон для выделения области списка */
+    border-radius: 5px; /* Закругленные углы для более приятного вида */
+}
+
+/* Дополнительные стили для скроллбара, чтобы сделать его аккуратным */
+#privateAreasList::-webkit-scrollbar {
+    width: 10px; /* Ширина полосы прокрутки */
+}
+
+#privateAreasList::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Цвет фона полосы прокрутки */
+}
+
+#privateAreasList::-webkit-scrollbar-thumb {
+    background: #888; /* Цвет самой полосы прокрутки */
+}
+
+#privateAreasList::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Цвет полосы при наведении */
+}
+#usersList {
+    max-height: 300px; /* Установите фиксированную высоту по своему усмотрению */
+    overflow-y: auto; /* Добавляет вертикальную прокрутку, если содержимое превышает высоту */
+    border: 1px solid #ccc; /* Рамка для визуального отделения списка от других элементов */
+    padding: 8px; /* Немного внутреннего пространства */
+    background-color: #ffffff; /* Белый фон для списка */
+    border-radius: 4px; /* Слегка закругленные углы */
+    margin-top: 10px; /* Отступ сверху, если нужно отделить от других элементов */
+}
+
+/* Стилизация скроллбара для списка пользователей */
+#usersList::-webkit-scrollbar {
+    width: 8px; /* Немного уже, чтобы не выделяться слишком сильно */
+}
+
+#usersList::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Цвет фона полосы прокрутки */
+}
+
+#usersList::-webkit-scrollbar-thumb {
+    background: #b0b0b0; /* Цвет полосы прокрутки */
+}
+
+#usersList::-webkit-scrollbar-thumb:hover {
+    background: #909090; /* Цвет полосы прокрутки при наведении */
+}
+
+.overlay-card {
+    max-height: 80vh; /* Ограничивает высоту карточки */
+    overflow-y: auto; /* Добавляет вертикальный скроллинг, если контент превышает максимальную высоту */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.overbutton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.overbutton:hover {
+    background-color: #0056b3;
+}
+
+
+.overlay-card {
+    max-height: 60vh; /* Уменьшено для мобильных устройств */
+    overflow-y: auto; /* Вертикальный скроллинг */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+    position: fixed;
+    bottom: 10px; /* Располагает кнопки внизу окна */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Гарантирует, что кнопки не будут обрезаны */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.overbutton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.overbutton:hover {
+    background-color: #0056b3;
+}
+
+
+#image-preview-container {
+    width: 100%;
+    height: 200px; /* Фиксированная высота контейнера */
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Изображение будет масштабироваться, сохраняя пропорции */
+}
+
+.overlay-card {
+    max-height: 60vh; /* Уменьшено для мобильных устройств */
+    overflow-y: auto; /* Вертикальный скроллинг */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.overbutton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.overbutton:hover {
+    background-color: #0056b3;
+}
+#image-preview-container {
+    width: 100%;
+    height: 300px; /* Увеличим высоту на компьютерах */
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.overlay-card {
+    max-height: 70vh; /* Увеличим высоту на компьютерах */
+    overflow-y: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Чтобы были видны кнопки снизу */
+}
+
+.button-container {
+    position: relative; /* Вместо фиксированного, привязываем кнопки относительно карточки */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.overbutton {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.overbutton:hover {
+    background-color: #0056b3;
+}
+
+@media screen and (max-width: 768px) {
+    #image-preview-container {
+        height: 200px; /* Уменьшим размер для мобильных */
+    }
+
+    .overlay-card {
+        max-height: 60vh;
+    }
+}

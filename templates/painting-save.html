@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixworld.fun</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+    <meta name="description" content="Создавай свои шедевры и территории рисуя пикселями">
+    <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="infoPanel" class="coords" style="position: absolute; top: 0; left: 0; background-color: rgba(255, 255, 255, 0.8); padding: 5px;">
+        {{ texts['Coords'] }}: <span id="coords">-</span><br>
+    </div>
+
+    <div class="container">
+        <div class="timer">
+            <span id="seconds">0</span>
+        </div>
+        <div id="canvas-container">
+            <canvas id="gridCanvas" style="display:none"></canvas> <!-- Вспомогательный канвас для сетки -->
+            <canvas id="drawing-canvas" width="1024" height="1024"></canvas>
+        </div>
+        <!-- Добавленные элементы палитры -->
+        <div id="color-palette">
+            <div class="color" style="background-color: rgb(255, 255, 255);"></div>
+            <div class="color" style="background-color: rgb(255, 255, 255);"></div>
+            <div class="color" style="background-color: rgb(228, 228, 228);"></div>
+            <div class="color" style="background-color: rgb(196, 196, 196);"></div>
+            <div class="color" style="background-color: rgb(136, 136, 136);"></div>
+            <div class="color" style="background-color: rgb(78, 78, 78);"></div>
+            <div class="color" style="background-color: rgb(0, 0, 0);"></div>
+            <div class="color" style="background-color: rgb(244, 179, 174);"></div>
+            <div class="color" style="background-color: rgb(255, 167, 209);"></div>
+            <div class="color" style="background-color: rgb(255, 84, 178);"></div>
+            <div class="color" style="background-color: rgb(255, 101, 101);"></div>
+            <div class="color" style="background-color: rgb(229, 0, 0);"></div>
+            <div class="color" style="background-color: rgb(154, 0, 0);"></div>
+            <div class="color" style="background-color: rgb(254, 164, 96);"></div>
+            <div class="color" style="background-color: rgb(229, 149, 0);"></div>
+            <div class="color" style="background-color: rgb(160, 106, 66);"></div>
+            <div class="color" style="background-color: rgb(96, 64, 40);"></div>
+            <div class="color" style="background-color: rgb(245, 223, 176);"></div>
+            <div class="color" style="background-color: rgb(255, 248, 137);"></div>
+            <div class="color" style="background-color: rgb(229, 217, 0);"></div>
+            <div class="color" style="background-color: rgb(148, 224, 68);"></div>
+            <div class="color" style="background-color: rgb(2, 190, 1);"></div>
+            <div class="color" style="background-color: rgb(104, 131, 56);"></div>
+            <div class="color" style="background-color: rgb(0, 101, 19);"></div>
+            <div class="color" style="background-color: rgb(202, 227, 255);"></div>
+            <div class="color" style="background-color: rgb(0, 211, 221);"></div>
+            <div class="color" style="background-color: rgb(0, 131, 199);"></div>
+            <div class="color" style="background-color: rgb(0, 0, 234);"></div>
+            <div class="color" style="background-color: rgb(25, 25, 115);"></div>
+            <div class="color" style="background-color: rgb(207, 110, 228);"></div>
+            <div class="color" style="background-color: rgb(130, 0, 128);"></div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-yeban">
+                <div class="chat">
+                    <div id="messagesContainer" class="messages-container">
+                        <!-- Контейнер для отображения сообщений -->
+                    </div>
+
+                    {% if current_user.is_authenticated %}
+                    <div class="message-input-container">
+                        <form id="sendMessageForm" method="post" action="{{ url_for('send_message') }}">
+                            <input type="text" id="messageInput" name="message" placeholder="{{ texts['PutTextIn'] }}" class="message-input" maxlength="200">
+                            <button type="submit" class="send-message-button">{{ texts['Send'] }}</button>
+                        </form>
+                    </div>
+
+                    {% else %}
+                    <p>{{ texts['PleaseToChat'] }}<a href="{{ url_for('login') }}">{{ texts['GoAuth'] }}</a>.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="admin-panel">
+                <!-- Эта кнопка будет отображаться только для администраторов -->
+                <button class="admin-button" {% if is_admin =="True" %} style="color: black;"{% else %} style="display: none" {% endif %}>{{ texts['AdminPanel'] }}</button>
+                {% if is_admin %}
+                <div class="admin-subpanel">
+                    <p id="ActiveMode">{{ texts['ChoosePaint'] }}</p>
+                    <button id="clearArea" class="admin-button">{{ texts['ClearArea'] }}</button>
+                    <button id="infoAbout" class="admin-button">{{ texts['TakePixInfo'] }}</button>
+                     <div id="pixelInfoContainer" style="display: none;">
+                        <p>Пользователь: <span id="pixelUsername"></span></p>
+                        <p>Email: <span id="pixelEmail"></span></p>
+                        <button id="banUserButton">{{ texts['GetBan'] }}</button>
+                    </div>
+                    <label for="showPrivateAreasCheckbox">{{ texts['ShowPrivate'] }}</label>
+                    <input type="checkbox" id="showPrivateAreasCheckbox" name="showPrivateAreas">
+                    <button id="SelectAreaForPrivat" class="admin-button">{{ texts['PickAreaPrivate'] }}</button>
+                    <label for="privat_cords">PrivateCoords</label>
+                    <input type="privat_cords" id="privat_cords" name="privat_cords" required>
+                    <label for="owner_id">{{ texts['LoginOwner'] }}:</label>
+                    <input type="owner_id" id="owner_id" name="owner_id" required>
+                    <button id="CreatePrivet" class="admin-button">{{ texts['CreatePrivate'] }}</button>
+
+                    <button id="showPrivateAreasList" class="admin-button">{{ texts['PrivateAreaList'] }}</button>
+                    <div id="privateAreasList" class="hidden"></div>
+
+                    <button id="showUsersList" class="admin-button">{{ texts['UsersList'] }}</button>
+                    <div id="usersList" class="hidden"></div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if is_admin %}
+    <script>
+        var isAdmin = true;
+    </script>
+    {% else %}
+    <script>
+        var isAdmin = false;
+    </script>
+    {% endif %}
+    {% if current_user.id %}
+    <script type="text/javascript">
+
+        var currentUserId = {{ current_user.id }};
+    </script>
+    {% endif %}
+    <button id="toggleChatButton" class="toggle-chat-button" style="bottom:70px; height: 50px; width:50px;">
+        <img src="static/img/chat.svg" alt="Чат" class="buttonico icon-button" style="height: 40px; position: absolute;">
+        <img src="static/img/crossed.svg" alt="Чат" class="buttonico icon-button ico-cross" style="height: 60px; position: absolute; display:none;">
+    </button>
+
+    <button id="MoreInfo" class="toggle-chat-button instruct toggleable" style="bottom:295px; display:none; height:50px; width:50px;">
+                <img src="static/img/info.svg" alt="Инфо" class="buttonico icon-button" style="height: 40px;">
+    </button>
+    <div id="auth-container" style="bottom:130px; height: 50px; width:50px;">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}" class="auth-button toggleable" style="display:none; height: 40px; width:30px;">
+                <img src="static/img/log-out-red.svg" alt="Выйти" class="buttonico icon-button" style="height: 40px;">
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="auth-button toggleable" style="display:none; height: 40px; width:30px;">
+                <img src="static/img/log-in.svg" alt="Войти" class="buttonico icon-button" style="height: 40px;">
+            </a>
+        {% endif %}
+
+    </div>
+    <script type="text/javascript">
+        var currentUserId = "{{ current_user.id }}"; // Предполагая, что у current_user есть свойство id
+    </script>
+    <script type="text/javascript">
+        var isUserLoggedIn = {{ current_user.is_authenticated | tojson }}; // Используйте `is_authenticated` для проверки статуса авторизации
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pixel_battle.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <div id="alertBox" class="alert-box hidden">
+        <p>{{ texts['PleaseToContinue'] }} <a href="{{ url_for('login') }}">{{ texts['GoAuth'] }}</a> {{ texts['ToContin'] }}.</p>
+        <button id="closeAlert">✖</button>
+    </div>
+    <select id="languageSelect" style="bottom:190px; display:none;" class="alert-box toggle-chat-button language-chooser toggleable">
+        <option value="ru" {{ 'selected' if session['lang'] == 'ru' else '' }}>Русский</option>
+        <option value="en" {{ 'selected' if session['lang'] == 'en' else '' }}>English</option>
+        <option value="de" {{ 'selected' if session['lang'] == 'de' else '' }}>Deutsch</option>
+        <option value="fr" {{ 'selected' if session['lang'] == 'fr' else '' }}>Français</option>
+        <option value="tr" {{ 'selected' if session['lang'] == 'tr' else '' }}>Türkçe</option>
+    </select>
+    <!-- Кнопка для открытия модального окна -->
+    <button id="helpButton" class="btn btn-info alert-box toggle-chat-button toggleable" style="left:25px; bottom:235px; display:none; height:50px; width: 50px;  align-items: center; justify-content: center;">
+        <img src="static/img/question.svg" alt="Нужна помощь?" class="buttonico icon-button" style="left:0; height: 40px;">
+    </button>
+
+    <!-- Модальное окно -->
+    <div id="helpModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ texts['Help'] }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ texts['HelpMess'] }} <a href="mailto:admin@pixworld.fun">admin@pixworld.fun</a> {{ texts['HelpMessPart'] }} <a href="https://t.me/YourBotLink">{{ texts['TgBotik'] }}</a>.</p>
+          </div>
+        </div>
+
+    </div>
+
+
+    <button id="settingsButton" class="toggle-chat-button toggle-chat-button instruct" style="bottom: 10px; left:0px; width: 50px; height:50px;">
+        <img src="static/img/menu.svg" alt="Настройки" class="buttonico icon-button" style="height: 40px;">
+    </button>
+
+    <script>
+    document.getElementById('languageSelect').addEventListener('change', function() {
+        window.location.href = "{{ url_for('set_language') }}?lang=" + this.value;
+    });
+    </script>
+
+
+    <script>
+    document.getElementById('settingsButton').addEventListener('click', function() {
+        var elements = document.querySelectorAll('.toggleable');
+        elements.forEach(function(element) {
+            if (element.style.display === 'none') {
+                element.style.display = ''; // Показываем элемент, если он был скрыт
+            } else {
+                element.style.display = 'none'; // Скрываем элемент, если он был виден
+            }
+        });
+    });
+    </script>
+
+
+
+    <div id="instructionModal" class="alert-box instruct-box hidden" style="flex-direction: column; top: 0;">
+            <h2>{{ texts['InfoHowToUse'] }}</h2>
+            <div class="instruction-content">
+                <p style="Font-size: 20px;" >{{ texts['MainInfoText']  | nl2br | safe  }}</p>
+                <hr>
+                {% if is_admin %}
+                <p style="Font-size: 20px;" >{{ texts['AdminInfoText'] | nl2br | safe }}</p>
+                <hr>
+                {% endif %}
+                <p style="Font-size: 20px;" >{{ texts['OtherInfoText'] | nl2br | safe }}</p>
+            </div>
+        <button id="closeInstruction">{{ texts['CloseButtonInst'] }}</button>
+    </div>
+    <div id="alertPrivateBox" class="alert-box hidden">
+        <p>{{ texts['UTryToPrintOnPrivate'] }}</p>
+        <button id="closePrivateAlert">✖</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Предотвращаем появление полос прокрутки */
+}
+
+#drawing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Убедитесь, что канвас находится ниже палитры */
+}
+
+#palette {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    /*z-index: 10;*/
+}
+
+#chat-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+.color {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid black;
+}
+#drawing-canvas {
+         border: 1px solid black;
+         position: absolute;
+}
+
+#color-palette {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2; /* Палитра будет поверх канваса */
+}

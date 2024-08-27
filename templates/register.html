@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="description" content="Создавай свои шедевры и территории рисуя пикселями">
+    <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="register-container">
+        <h2>{{ texts['Reg'] }}</h2>
+        {% if error_message %}
+            <div class="error-message">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        <form action="{{ url_for('register') }}" method="post">
+            <div class="form-group">
+                <label for="username">{{ texts['Login'] }}</label>
+                <input type="text" id="username" name="username" required value="{{ username }}">
+            </div>
+            <div class="form-group">
+                <label for="email">{{ texts['Email'] }}</label>
+                <input type="email" id="email" name="email" required value="{{ email }}">
+            </div>
+            <div class="form-group">
+                <label for="password">{{ texts['Pass'] }}</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">{{ texts['RepeatPass'] }}</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn-register">{{ texts['Registrate'] }}</button>
+        </form>
+        <select id="languageSelect" class="alert-box ">
+        <option value="ru" {{ 'selected' if session['lang'] == 'ru' else '' }}>Русский</option>
+        <option value="en" {{ 'selected' if session['lang'] == 'en' else '' }}>English</option>
+        <option value="de" {{ 'selected' if session['lang'] == 'de' else '' }}>Deutsch</option>
+        <option value="fr" {{ 'selected' if session['lang'] == 'fr' else '' }}>Français</option>
+        <option value="tr" {{ 'selected' if session['lang'] == 'tr' else '' }}>Türkçe</option>
+    </select>
+
+    <script>
+    document.getElementById('languageSelect').addEventListener('change', function() {
+        window.location.href = "{{ url_for('set_language') }}?lang=" + this.value;
+    });
+    </script>
+
+        <a href="{{ url_for('login') }}" class="login-link">{{ texts['GochAccEnter'] }}</a>
+    </div>
+</body>
+</html>

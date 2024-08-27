@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ texts['Auth'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <meta name="description" content="Создавай свои шедевры и территории рисуя пикселями">
+    <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+    <style>
+        /* Дополнительные стили для ссылки */
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px; /* Добавляем отступ сверху */
+            text-decoration: underline; /* Добавляем подчеркивание */
+            color: #007bff; /* Сменяем цвет на синий */
+        }
+
+        .register-link:hover {
+            text-decoration: none; /* Убираем подчеркивание при наведении */
+            color: #0056b3; /* Сменяем цвет на темно-синий */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>{{ texts['Auth'] }}</h2>
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label for="username">{{ texts['Login'] }}</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">{{ texts['Pass'] }}</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-login">{{ texts['ComeIn'] }}</button>
+        </form>
+        <a href="{{ url_for('register') }}" class="register-link">{{ texts['Registration'] }}</a>
+        <a href="/" class="register-link">{{ texts['RemainSpect'] }}</a><!-- Добавляем ссылку -->
+    </div>
+
+    {% if is_admin %}
+    <div class="admin-panel">
+        <!-- Кнопка, которая отображает поле с дополнительными функциями администратора -->
+        <button class="admin-button" onclick="toggleAdminPanel()">{{ texts['AdminPanel'] }}</button>
+
+        <!-- Поле с дополнительными функциями администратора -->
+        <div id="admin-panel" style="display: none;">
+            <!-- Добавьте кнопки или другие элементы управления здесь -->
+            <button onclick="fillArea()">Закрасить область</button>
+            <button onclick="pixelInfo()">Информация о пикселе</button>
+            <button onclick="createPrivate()">Создать приват</button>
+            <button onclick="closeAdminPanel()">Закрыть</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <select id="languageSelect" class="alert-box " style="Font-size: 14px;">
+        <option value="ru" {{ 'selected' if session['lang'] == 'ru' else '' }}>Русский</option>
+        <option value="en" {{ 'selected' if session['lang'] == 'en' else '' }}>English</option>
+        <option value="de" {{ 'selected' if session['lang'] == 'de' else '' }}>Deutsch</option>
+        <option value="fr" {{ 'selected' if session['lang'] == 'fr' else '' }}>Français</option>
+        <option value="tr" {{ 'selected' if session['lang'] == 'tr' else '' }}>Türkçe</option>
+    </select>
+
+    <script>
+    document.getElementById('languageSelect').addEventListener('change', function() {
+        window.location.href = "{{ url_for('set_language') }}?lang=" + this.value;
+    });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

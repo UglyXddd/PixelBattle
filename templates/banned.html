@@ -1,0 +1,69 @@
+<!-- templates/banned.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="static/img/favicon.png" type="image/png">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta name="description" content="Создавай свои шедевры и территории рисуя пикселями">
+    <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+    <title>Заблокирован</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #ff4136;
+        }
+
+        p {
+            color: #555;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #ff4136;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #e03630;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ texts['YouBanned'] }}</h1>
+    <p>{{ texts['SrryUrAccBanned'] }}</p>
+    <form action="/logout" method="post">
+        <button type="submit">{{ texts['Quit'] }}</button>
+    </form>
+    <select id="languageSelect" class="alert-box">
+        <option value="ru" {{ 'selected' if session['lang'] == 'ru' else '' }}>Русский</option>
+        <option value="en" {{ 'selected' if session['lang'] == 'en' else '' }}>English</option>
+        <option value="de" {{ 'selected' if session['lang'] == 'de' else '' }}>Deutsch</option>
+        <option value="fr" {{ 'selected' if session['lang'] == 'fr' else '' }}>Français</option>
+        <option value="tr" {{ 'selected' if session['lang'] == 'tr' else '' }}>Türkçe</option>
+    </select>
+
+    <script>
+    document.getElementById('languageSelect').addEventListener('change', function() {
+        window.location.href = "{{ url_for('set_language') }}?lang=" + this.value;
+    });
+    </script>
+</body>
+</html>
